@@ -1,0 +1,103 @@
+html body {
+  margin:0px;
+  font-family: "Segoe","Segoe UI","Arial","sans-serif";
+}
+.header {
+  width: 100%;
+  height: 48px;
+  background-color: #0078d7;
+  color: #ffffff;
+  margin-left: 0px;
+  margin-top: 0px;
+}
+.todo-heading {
+  margin-left: 80px;
+  margin-top: 10px;
+  color: #140505;
+  height: 50PX;
+  width: 50PX;
+}
+.side-bar {
+  height: 100%;
+  width: 48px;
+  background-color: #ffffff;
+  margin-left: 0px;
+}
+.dotted-icon {
+  height: 22px;
+  width: 22px;
+  background-color: transparent;
+}
+.dotted-icon-button {
+  margin:0px;
+  outline: none;
+  border: none;
+  height: 48px;
+  width: 48px;
+  background-color: transparent;
+}
+.dotted-icon-button:hover {
+  background-color: #084374;
+} 
+.search-box {
+  border-radius: 2px;
+  display: flex;
+  margin: auto;
+  margin-top: -102px;
+  background-color: #c3dcf7;
+  width: 26%;
+  height: 33px;
+  align-items: center;
+}
+.input-field {
+  border-radius: 8px;
+  width: 300px;
+  height: 34px;
+  outline: none;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: hidden;
+  background-color: transparent;
+}
+.lens-icon {
+  width: 35px;
+  height: 35px;
+}
+input[type="text"]::placeholder {  
+  text-align: justify; 
+  color: #0078d7;
+  background-color: transparent;
+  font-size: 14px;
+} 
+.search-box:hover {
+  background-color: #ffffff;
+}
+.hamburger-icon, .sun-icon {
+  height: 20px;
+  width: 20px;
+  background-color: #ffffff;
+}
+.star-icon{
+  height: 15px;
+  width: 15px;
+  background-color: #ffffff;
+}
+.hamburger-icon-button {
+  height: 70px;
+  width: 48px;
+  outline: none;
+  border: none;
+  background-color: #ffffff;
+}
+.sun-icon-button, .star-icon-button {
+  height: 30px;
+  width: 48px;
+  outline: none;
+  border: none;
+  background-color: #ffffff;
+
+}
+.hamburger-icon:hover {
+  background-color: #ffffff;
+}
