@@ -1,3 +1,8 @@
+#container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 html body {
   margin:0px;
   font-family: "Segoe","Segoe UI","Arial","sans-serif";
@@ -13,20 +18,25 @@ html body {
 .todo-heading {
   margin-left: 80px;
   margin-top: 10px;
-  color: #140505;
+  color: #ffffff;
   height: 50PX;
   width: 50PX;
 }
 .side-bar {
   height: 100%;
   width: 48px;
-  background-color: #ffffff;
+  background-color: #f4f4f4;
   margin-left: 0px;
+  border-right-width: .08px;
+}
+.nav-bar {
+  display: flex;
 }
 .dotted-icon {
   height: 22px;
   width: 22px;
   background-color: transparent;
+  cursor: pointer;
 }
 .dotted-icon-button {
   margin:0px;
@@ -49,7 +59,7 @@ html body {
   height: 33px;
   align-items: center;
 }
-.input-field {
+.search-field {
   border-radius: 8px;
   width: 300px;
   height: 34px;
@@ -73,31 +83,56 @@ input[type="text"]::placeholder {
 .search-box:hover {
   background-color: #ffffff;
 }
-.hamburger-icon, .sun-icon {
+.hamburger-icon, .sun-icon, .calender-icon, .user-icon, .home-icon, .plus-icon {
   height: 20px;
   width: 20px;
   background-color: #ffffff;
+  cursor: pointer;
 }
-.star-icon{
+.star-icon {
   height: 15px;
   width: 15px;
   background-color: #ffffff;
+  cursor: pointer;
 }
 .hamburger-icon-button {
   height: 70px;
-  width: 48px;
+  width: 44px;
   outline: none;
   border: none;
   background-color: #ffffff;
 }
-.sun-icon-button, .star-icon-button {
-  height: 30px;
-  width: 48px;
+.sun-icon-button, .star-icon-button, .calender-icon-button,
+ .user-icon-button, .home-icon-button, .plus-icon-button {
+  height: 37px;
+  width: 44px;
   outline: none;
   border: none;
   background-color: #ffffff;
-
+}
+.plus-icon-button {
+  margin-top: 15px;
 }
 .hamburger-icon:hover {
   background-color: #ffffff;
+}
+#main {
+  flex: 1 1 0px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: white;
+  transition: background-color 0.3s;
+  height: 883px;
+  width: 753px;
+  margin-left: 48px;
+  margin-top: 0px;
+}
+#text-field {
+  display:none;
+  margin-left: 0px;
+  margin-top: 65px;
+}
+.list-of-items {
+
 }

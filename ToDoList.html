@@ -1,51 +1,69 @@
 <html>
   <head>
-    <script defer="true" src="js/ToDoList.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/ToDoList.css"></head>
-    <title>My Day - To Do</title>
+    <script type="text/javascript" defer="true" src="js/ToDoList.js"></script>
+    <link  type="text/css" rel="stylesheet" href="css/ToDoList.css"></head>
+    <title>Tasks - To Do</title>
     <link rel="icon" type="image/ico" href="images/logo.png" />
   </head>
 <body>
-  <div class="cantainer">
-    <div class="header">
-      <span class="main-icon">
-        <button type="submit" class="dotted-icon-button">
+  <div id="root">
+    <div id="cantainer">
+      <div class="header">
+        <span class="main-icon">
+          <button type="submit" class="dotted-icon-button">
           <img class="dotted-icon" src="images/dotted-icon.png" alt="Microsoft">
-        </button>
-      </span>
-      
-      <span class="todo-heading">
-         <h4 >To Do</h4>
-      </span>
-
-      <span class="search-box">
+          </button>
+        </span>    
+        <span class="todo-heading">
+          <h4> To Do </h4>
+        </span>
+        <span class="search-box">
           <img src="images/lens-icon.png" class="lens-icon">
-          <input type="text" class="input-field" id="my-input" placeholder="Search">
-      </span>
-    </div>
-
-    <div class="side-bar">
-      <button type="submit" class="hamburger-icon-button">
-        <img src="images/hamburger.png" class="hamburger-icon">
-      </button>
-      <button type="submit" class="sun-icon-button">
-        <img src="images/sun.svg" class="sun-icon">
-      </button>
-      <button type="submit" class="star-icon-button ">
-          <img src="images/star-icon.svg" class="star-icon ">
-        </button>
-        <button type="submit" class="sun-icon-button">
+          <input type="text" class="search-field" id="my-input" placeholder="Search">
+        </span>
+      </div>
+      <div class="nav-bar">
+      <div class="side-bar">
+        <div>
+          <button type="submit" class="hamburger-icon-button">
+            <img src="images/hamburger.svg" class="hamburger-icon">
+          </button>
+        </div>
+        <div>
+          <button type="submit" class="sun-icon-button">
             <img src="images/sun.svg" class="sun-icon">
           </button>
-          <button type="submit" class="sun-icon-button">
-              <img src="images/sun.svg" class="sun-icon">
-            </button>
-        <span></span>
+        </div>
+        <div>
+          <button type="submit" class="star-icon-button ">
+            <img src="images/star-icon.svg" class="star-icon ">
+          </button>
+        </div>  
+        <button type="submit" class="calender-icon-button ">
+          <img src="images/calendar.svg" class="calender-icon ">
+        </button>
+        <button type="submit" class="user-icon-button ">
+          <img src="images/user.png" class="user-icon ">
+        </button>
+        <button type="submit" class="home-icon-button ">
+          <img src="images/home.svg" class="home-icon ">
+        </button>
+        <button type="submit" class="plus-icon-button" onclick="myFunction()">
+          <img src="images/plus-symbol.svg" class="plus-icon ">
+        </button>
+      </div>
+      <div id="text-field">
+          <p>My Day</p>
+          <p>Important</p>
+          <p>Planned</p>
+          <p>Assigned To Me</p>
+          <p>Tasks</p>
+          <span id="new-task">
+            <input type="text" name="task" class="new-task-input"/>
+          </span>
+        </div>
+      </div>
     </div>
-
-      <input id="task"><button id="add">Add New Task</button>
-      <hr>
-    <div id="todos"></div>
   </div>
 </body>
 </html>
