@@ -86,13 +86,13 @@ input[type="text"]::placeholder {
 .hamburger-icon, .sun-icon, .calender-icon, .user-icon, .home-icon, .plus-icon {
   height: 20px;
   width: 20px;
-  background-color: #ffffff;
+  background-color: #f4f4f4;
   cursor: pointer;
 }
 .star-icon {
   height: 15px;
   width: 15px;
-  background-color: #ffffff;
+  background-color: #f4f4f4;
   cursor: pointer;
 }
 .hamburger-icon-button {
@@ -100,7 +100,7 @@ input[type="text"]::placeholder {
   width: 44px;
   outline: none;
   border: none;
-  background-color: #ffffff;
+  background-color: #f4f4f4;
 }
 .sun-icon-button, .star-icon-button, .calender-icon-button,
  .user-icon-button, .home-icon-button, .plus-icon-button {
@@ -108,13 +108,13 @@ input[type="text"]::placeholder {
   width: 44px;
   outline: none;
   border: none;
-  background-color: #ffffff;
+  background-color: #f4f4f4;
 }
 .plus-icon-button {
-  margin-top: 15px;
+  margin-top: 20px;
 }
 .hamburger-icon:hover {
-  background-color: #ffffff;
+  background-color: #f4f4f4;
 }
 #main {
   flex: 1 1 0px;
@@ -132,7 +132,17 @@ input[type="text"]::placeholder {
   display:none;
   margin-left: 0px;
   margin-top: 65px;
+  line-height: 21px;
+  width: 200px;
+  background-color: #f4f4f4;
 }
-.list-of-items {
-
+#all-tasks {
+  display: block;
+  margin-top: 5px;
+  margin-left: 15px;
+  background-color: #f4f4f4;
+}
+#new-list-input, #new-task-input {
+  outline: none;
+  border: none;
 }
