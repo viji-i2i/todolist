@@ -23,11 +23,11 @@ html body {
   width: 50PX;
 }
 .side-bar {
+  display:block;
   height: 100%;
-  width: 48px;
+  width: auto;
   background-color: #f4f4f4;
   margin-left: 0px;
-  border-right-width: .08px;
 }
 .nav-bar {
   display: flex;
@@ -101,6 +101,7 @@ input[type="text"]::placeholder {
   outline: none;
   border: none;
   background-color: #f4f4f4;
+  margin-bottom: 10px;
 }
 .sun-icon-button, .star-icon-button, .calender-icon-button,
  .user-icon-button, .home-icon-button, .plus-icon-button {
@@ -111,7 +112,9 @@ input[type="text"]::placeholder {
   background-color: #f4f4f4;
 }
 .plus-icon-button {
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-left: 0px;
+  float: left;
 }
 .hamburger-icon:hover {
   background-color: #f4f4f4;
@@ -128,13 +131,10 @@ input[type="text"]::placeholder {
   margin-left: 48px;
   margin-top: 0px;
 }
-#text-field {
+.right-side-bar {
+  margin-left: 8px;
+  margin-top: 12px;
   display:none;
-  margin-left: 0px;
-  margin-top: 65px;
-  line-height: 21px;
-  width: 200px;
-  background-color: #f4f4f4;
 }
 #all-tasks {
   display: block;
@@ -145,4 +145,17 @@ input[type="text"]::placeholder {
 #new-list-input, #new-task-input {
   outline: none;
   border: none;
+  width: 150px;
+}
+#list-items {
+  list-style-image: url('../images/list.svg');
+  line-height: 25px;
+  margin-left: 0px;
+}
+#list-items img {
+  height: 37px;
+  width: 44px;
+}
+.toggle-bar, .side-bar-add-list {
+  display: flex;
 }

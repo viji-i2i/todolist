@@ -24,50 +24,53 @@
       </div>
       <div class="nav-bar">
         <div class="side-bar">
-          <button type="submit" class="hamburger-icon-button" onclick="showTextField()">
+          <button type="submit" class="hamburger-icon-button" id="show-right-side-bar">
             <img src="images/hamburger.svg" class="hamburger-icon">
           </button>
-          <button type="submit" class="sun-icon-button">
-            <img src="images/sun.svg" class="sun-icon">
-          </button>
-          <button type="submit" class="star-icon-button ">
-            <img src="images/star-icon.svg" class="star-icon ">
-          </button>
-          <button type="submit" class="calender-icon-button ">
-            <img src="images/calendar.svg" class="calender-icon ">
-          </button>
-          <button type="submit" class="user-icon-button ">
-            <img src="images/user.png" class="user-icon ">
-          </button>
-          <button type="submit" class="home-icon-button ">
-            <img src="images/home.svg" class="home-icon ">
-          </button>
-          <button type="submit" class="plus-icon-button" id="show-text-field">
-            <img src="images/plus-symbol.svg" class="plus-icon" >
-          </button>
-        </div>
-        <div id="text-field">
-          <p>My Day</p>
-          <p>Important</p>
-          <p>Planned</p>
-          <p>Assigned To Me</p>
-          <p>Tasks</p><br>
-          <div>
-            <span id="new-task">
-                <ul id="list-items"></ul>
-              <input type="text" name="task" id="new-list-input" placeholder="New list"/>
-              <button onclick="addNewList()" id="add-list">Add</button>
+          <span class="toggle-bar">
+            <button type="submit" class="sun-icon-button">
+              <img src="images/sun.svg" class="sun-icon">
+            </button>
+            <span class="right-side-bar"> My Day </span>
+          </span>
+          <span class="toggle-bar">
+              <button type="submit" class="star-icon-button ">
+              <img src="images/star-icon.svg" class="star-icon ">
+            </button>
+            <span class="right-side-bar"> Important  </span>
+          </span>
+          <span class="toggle-bar">
+              <button type="submit" class="calender-icon-button ">
+              <img src="images/calendar.svg" class="calender-icon ">
+            </button>
+            <span class="right-side-bar"> Planned</span>
+          </span>
+          <span class="toggle-bar">
+              <button type="submit" class="user-icon-button ">
+              <img src="images/user.png" class="user-icon ">
+            </button>
+            <span class="right-side-bar"> Assigned To Me</span>
+          </span>
+          <span class="toggle-bar">
+              <button type="submit" class="home-icon-button ">
+              <img src="images/home.svg" class="home-icon ">
+            </button>
+            <span class="right-side-bar"> Tasks</span>
+          </span>
+            <ul id="list-items"></ul>
+          <div class="side-bar-add-list">
+            <button type="submit" class="plus-icon-button" id="show-text-field">
+              <img src="images/plus-symbol.svg" class="plus-icon" >
+            </button>
+            <span class="right-side-bar"> 
+              <span id="new-task" class="right-side-bar">
+                <input type="text" name="task" id="new-list-input" placeholder="New list"/>
+                <button id="add-list">Add</button>
+              </span>
             </span>
           </div>
         </div>
-        <div id="all-tasks">
-          <h3>Tasks</h3>
-          <ul id="task-items"></ul>
-          <input type="text" id="new-task-input" placeholder="Add task">
-          <button  class="add-task">Add</button>
-        </div>
       </div>
-    </div>
   </div>
 </body>
 </html>
