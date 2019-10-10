@@ -1,19 +1,21 @@
-document.getElementById("add-list").addEventListener("click",addNewList);
-document.getElementById("show-text-field").addEventListener("click", showRightSideBar);
-document.getElementById("show-right-side-bar").addEventListener("click", showRightSideBar);
+"use strict";
+addEvents();
+function addEvents(){
+
+  document.getElementById("add-list").addEventListener("click",addNewList);
+  document.getElementById("show-text-field").addEventListener("click", showRightSideBar);
+  document.getElementById("show-right-side-bar").addEventListener("click", showRightSideBar);
+}
+var listItems = document.getElementById('list-items');
 
 var newListInput = document.getElementById('new-list-input');
-var toDoLists = []; 
+var toDoList = []; 
 var taskId = 0;
 
 function showRightSideBar() {
-  var textField = document.getElementsByClassName("right-side-bar");
-  for(let index in textField) {
-    if (textField[index].style.display === "block") {
-      textField[index].style.display = "none";
-    } else {
-      textField[index].style.display = "block";
-    }
+  var textFields = document.getElementsByClassName("right-side-bar");
+  for(let textField of textFields) {
+    textField.classList.toggle("none")
   }
 }
 /* To Trigger add-list button While Entering Enter Key */
@@ -27,29 +29,51 @@ document.getElementById("new-list-input")
 
 /* This Method addNewList is used to store new List items in Array */
 function addNewList() {
-  console.log("newList");
   var newList = {
     id:"", 
     name:"", 
-    status:"true", 
-    task:[]
+    status:"incomplete", 
+    tasks:[]
   };
-  newList.id = taskId++;
+  var listId = taskId++;
+  newList.id = listId
   var inputValue = document.getElementById("new-list-input").value;
-  if (inputValue === "") {
-    alert("It seems like List Name is Emplty. Enter Your List name");
+  if ("" === inputValue) {
+    alert("It seems like List Name is Empty. Enter Your List name");
   } else {
     newList.name = inputValue;
-    console.log(newList);
-    toDoLists.push(newList);
+    toDoList.push(newList);
     /* To display All the Available List Items */
-    var li = document.createElement("li");
-    var task = document.createTextNode(inputValue);
-    li.addEventListener("click", addNewList);
-    li.appendChild(task);
-    document.getElementById("list-items").appendChild(li);  
+    var listItem = document.createElement("li");
+    var task = document.createTextNode(newList.name);
+    listItem.addEventListener("click", displayTasks.bind(newList));
+    listItem.appendChild(task);
+    listItems.appendChild(listItem);  
     document.getElementById("new-list-input").value = "";
   }
 }
+
+function displayTasks() {
+  document.getElementById()
+  console.log(this)
+}
+
+function addNewTask () {
+  var newTask = {
+    id:"", 
+    name:"", 
+    status:"incomplete", 
+    step:[],
+    note:""
+  };
+}
+
+
+
+
+function a(element, event, listener, bindElement="") {
+  element.addEventListener(event, listener.bind(bindElement));
+}
+
 
 

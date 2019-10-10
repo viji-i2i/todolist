@@ -152,10 +152,10 @@ input[type="text"]::placeholder {
   line-height: 25px;
   margin-left: 0px;
 }
-#list-items img {
-  height: 37px;
-  width: 44px;
-}
 .toggle-bar, .side-bar-add-list {
   display: flex;
+  cursor: pointer;
+}
+.none{
+  display:block;
 }
