@@ -76,7 +76,7 @@ html body {
 }
 input[type="text"]::placeholder {  
   text-align: justify; 
-  color: #0078d7;
+  color: #4097ed;
   background-color: transparent;
   font-size: 14px;
 } 
@@ -151,6 +151,7 @@ input[type="text"]::placeholder {
   list-style-image: url('../images/list.svg');
   line-height: 25px;
   margin-left: 0px;
+  cursor: pointer;
 }
 .toggle-bar, .side-bar-add-list {
   display: flex;
@@ -158,7 +159,23 @@ input[type="text"]::placeholder {
 }
 .task-field-class {
   display: block;
+  width: 1000px;
+  margin-left: 20px;
+  margin-top: 15px;
+}
+.steps-field-class {
+  display: block;
+  margin-top: 15px;
 }
 .block{
   display: block;
+}
+#list-heading, #task-heading {
+  color: #0078d7;
+  border: none;
+  font-size: 25px;
+  width: 150px;
+}
+#steps-field {
+  margin-left: 0px;
 }
