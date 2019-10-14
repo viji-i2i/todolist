@@ -142,7 +142,7 @@ input[type="text"]::placeholder {
   margin-left: 15px;
   background-color: #f4f4f4;
 }
-#new-list-input, #new-task-input {
+#new-list-input, #new-task-input, #step-input {
   outline: none;
   border: none;
   width: 150px;
@@ -159,16 +159,22 @@ input[type="text"]::placeholder {
 }
 .task-field-class {
   display: block;
-  width: 1000px;
+  width: 0px;
   margin-left: 20px;
   margin-top: 15px;
+  overflow: hidden;
 }
 .steps-field-class {
   display: block;
   margin-top: 15px;
+  width: 0px;
+  overflow: hidden;
 }
 .block{
   display: block;
+}
+li {
+  cursor: pointer;
 }
 #list-heading, #task-heading {
   color: #0078d7;

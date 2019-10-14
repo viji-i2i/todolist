@@ -12,9 +12,13 @@ var stepItems = document.getElementById('step-items');
 var listHeading = document.getElementById('list-heading-input');
 var listHeadingInput = document.getElementById('list-heading');
 var newListInput = document.getElementById('new-list-input');
+var taskFieldClass = document.getElementsByClassName('task-field-class'); 
+var stepsFieldClass = document.getElementsByClassName('steps-field-class'); 
+
 var toDoList = [];
 var listInfo = "";
 var taskInfo = "";
+var taskCount = "";
 
 
 function showRightSideBar() {
@@ -27,7 +31,6 @@ function showRightSideBar() {
 /* To Trigger add-list button While Entering Enter Key */
 document.getElementById("new-list-input")
   .addEventListener("keyup", function (event) {
-    event.preventDefault();
     if (event.keyCode == 13) {
       document.getElementById("add-list").click();
     }
@@ -36,7 +39,6 @@ document.getElementById("new-list-input")
 /* To Trigger add-list button While Entering Enter Key */
 document.getElementById("new-task-input")
   .addEventListener("keyup", function (event) {
-    event.preventDefault();
     if (event.keyCode == 13) {
       addNewTask();
     }
@@ -45,11 +47,13 @@ document.getElementById("new-task-input")
 /* To Trigger add-list button While Entering Enter Key */
 document.getElementById("step-input")
   .addEventListener("keyup", function (event) {
-    event.preventDefault();
     if (event.keyCode == 13) {
       addStepsToTask();
     }
   });
+
+  /* To Delete List */
+ 
 /* To Trigger add-list button While Entering Enter Key
 document.getElementById("list-heading")
   .addEventListener("keyup", function (event) {
@@ -75,15 +79,21 @@ function addNewList() {
     newList.name = inputValue;
     toDoList.push(newList);
     listInfo = newList;
+    taskItems.innerHTML = "";
     // To display All the Available List Items 
     var listItem = document.createElement("li");
     var listName = document.createTextNode(newList.name);
     listItem.addEventListener("click", assignListInfo.bind(newList));
+    listItem.addEventListener("click", function(event) {
+      if (event.button == 2) { 
+        alert("Left click not allowed"); 
+} 
+
+    });
     listItem.appendChild(listName);
     listItems.appendChild(listItem);
-
+    taskFieldClass[0].style.width = "900px";
     document.getElementById("list-heading").value = newList.name;
-
     document.getElementById("list-heading").addEventListener("change", updateListName.bind(newList));
     document.getElementById("new-list-input").value = "";
     //To Display List Heading in right Side bar
@@ -91,6 +101,8 @@ function addNewList() {
 
   }
 }
+
+
 function updateListName() {
   console.log(this);
   /*for(let index = 0; index<toDoList.length; index++) {
@@ -108,8 +120,14 @@ function reloadList() {
   for (let index = 0; index < toDoList.length; index++) {
     var listItem = document.createElement("li");
     var listName = document.createTextNode(toDoList[index].name);
+    taskCount = toDoList[index].tasks.length; 
+
+    console.log(taskCount);
     listItem.addEventListener("click", assignListInfo.bind(toDoList[index]));
     listItem.appendChild(listName);
+    if (1 <= taskCount) {
+      listItem.appendChild(document.createTextNode(taskCount));
+    }
     listItems.appendChild(listItem);
 
     document.getElementById("list-heading").value = toDoList[index].name;
@@ -124,6 +142,7 @@ function assignListInfo() {
   displayTasks();
 }
 function assignTaskInfo() {
+  stepsFieldClass[0].style.width = "auto";
   document.getElementById("task-heading").value = this.name;
   taskInfo = this;
   displaySteps();
@@ -174,17 +193,20 @@ function addNewTask() {
   let taskName = document.getElementById("new-task-input").value;
   newTask.name = taskName;
   taskInfo = newTask;
+  stepItems.innerHTML = "";
   // To display All the Available Tasks 
   var taskItem = document.createElement("li");
   var task = document.createTextNode(newTask.name);
+  var checkMark = document.createTextNode("\u2713");
   taskItem.addEventListener("click", assignTaskInfo.bind(newTask));
+  taskItem.appendChild(checkMark);
   taskItem.appendChild(task);
   taskItems.appendChild(taskItem);
   document.getElementById("new-task-input").value = "";
   listInfo.tasks.push(newTask);
+  reloadList();
 
   //console.log(newTask.name)
-  document.getElementById("task-heading").value = newTask.name;
 
 }
 
