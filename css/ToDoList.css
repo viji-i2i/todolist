@@ -147,6 +147,11 @@ input[type="text"]::placeholder {
   border: none;
   width: 150px;
 }
+#task-items {
+  list-style: none;
+  display: block;
+  text-decoration: none;
+}
 #list-items {
   list-style-image: url('../images/list.svg');
   line-height: 25px;
@@ -168,6 +173,7 @@ input[type="text"]::placeholder {
   display: block;
   margin-top: 15px;
   width: 0px;
+  height: 100%;
   overflow: hidden;
 }
 .block{
@@ -184,4 +190,21 @@ li {
 }
 #steps-field {
   margin-left: 0px;
+}
+#delete-btn, #delete-btn img {
+  height: 20px;
+  width: 20px;
+  align-content: center;
+  cursor: pointer;
+}
+#delete-btn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+
+}
+#delete-step {
+  margin-bottom: 0px;
+  margin-right: 0px;
+  display: flex;
 }
