@@ -201,6 +201,7 @@ li {
   background-color: transparent;
   border: none;
   outline: none;
+  background-image: url("../images/delete-icon.png");
 
 }
 #delete-step {

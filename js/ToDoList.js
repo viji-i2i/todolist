@@ -1,135 +1,173 @@
 "use strict";
-addEventListeners();
-function addEventListeners() {
-  document.getElementById("add-list").addEventListener("click", addNewList);
-  document.getElementById("show-text-field").addEventListener("click", showRightSideBar);
-  document.getElementById("show-right-side-bar").addEventListener("click", showRightSideBar);
-}
-var listItems = document.getElementById('list-items');
-var taskItems = document.getElementById('task-items');
-var stepItems = document.getElementById('step-items');
-var listHeading = document.getElementById('list-heading-input');
-var listHeadingInput = document.getElementById('list-heading');
-var newListInput = document.getElementById('new-list-input');
-var taskFieldClass = document.getElementsByClassName('task-field-class'); 
-var stepsFieldClass = document.getElementsByClassName('steps-field-class'); 
-var deleteStep =  newListInput = document.getElementById('delete-step');
-
-
-var toDoList = [];
-var listInfo = "";
-var taskInfo = "";
-var taskCount = "";
-
-function showRightSideBar() {
-  var textFields = document.getElementsByClassName("right-side-nav-bar");
-  for (let textField of textFields) {
-    textField.classList.toggle("block")
-  }
+init();
+function init() {
+  addEventListeners(getElementsById("add-list"),"click", addNewList);
+  addEventListeners(getElementsById("new-task-input"),"keyup",addTask);
+  addEventListeners(getElementsById("task-heading"),"keyup",editTaskName);
+  addEventListeners(getElementsById("list-heading"),"keyup",editListName);
+  addEventListeners(getElementsById("step-input"),"keyup",addSteps);
+  addEventListeners(getElementsById("show-text-field"),"click",showTaskField);
 }
 
-/* To Trigger add-list button While Entering Enter Key */
-document.getElementById("new-list-input")
-  .addEventListener("keyup", function (event) {
-    if (event.keyCode == 13) {
-      document.getElementById("add-list").click();
-    }
-  });
+/**
+ * 
+ * @param {id} id which is used to get Elements 
+ * @return Element is returned
+ * This Generic method is used to get Elements By using given Id
+ */
+function getElementsById(id) {
+  return (document.getElementById(id));
+}
 
-/* To Trigger add-list button While Entering Enter Key */
-document.getElementById("new-task-input")
-  .addEventListener("keyup", function (event) {
-    if (event.keyCode == 13) {
-      addNewTask();
-    }
-  });
+/**
+ * 
+ * @param {class} className which is used to get Elements 
+ * @return Element is returned
+ * This Generic method is used to get Elements By using given Class Name
+ */
+function getElementByClassName(className) {
+  return (document.getElementsByClassName(className));
+}
 
-/* To Trigger add-list button While Entering Enter Key */
-document.getElementById("step-input")
-  .addEventListener("keyup", function (event) {
-    if (event.keyCode == 13) {
-      addStepsToTask();
-    }
-  });
+/**
+ * 
+ * @param {Element} element to which event to be added
+ * @param {Event} event kind of element to be added
+ * @param {Function} functionName function to be trigger which occurrence of event
+ * @param {Object} bindElement Element to be bind
+ * This Generic Function is used to Add Event listeners to particular element
+ */
+function addEventListeners(element, event, functionName, bindElement = "") {
+  element.addEventListener(event, functionName.bind(bindElement));
+}
 
-  document.getElementById("list-heading")
-     .addEventListener("keyup", function (event) {
-    if (event.keyCode == 13) {
-      updateListName();
-    }
-  });
+// toDoList is a Array used to store All the List objects
+let toDoList = [];
+let listInfo = {};
+let taskInfo = {};
+let stepInfo = {};
 
-/* This Method addNewList is used to store new List items in Array */
+/**
+ * This Method addNewList is used to store new List items in toDoList Array
+ */
 function addNewList() {
-  var newList = {
+  let newList = {
     id: "",
     name: "",
     status: "incomplete",
     tasks: []
   };
   newList.id = generateId();
-  var inputValue = document.getElementById("new-list-input").value;
-  if ("" === inputValue) {
+  let listItems = getElementsById("list-items");
+  let taskItems = getElementsById("task-items");
+  let inputValue = getElementsById("new-list-input");
+  if ("" === inputValue.value) {
     alert("It seems like List Name is Empty. Enter Your List name");
   } else {
-    newList.name = inputValue;
+    newList.name = inputValue.value;
     toDoList.push(newList);
     listInfo = newList;
     taskItems.innerHTML = "";
     // To display All the Available List Items 
-    var listItem = document.createElement("li");
-    var listName = document.createTextNode(newList.name);
-    listItem.addEventListener("click", assignListInfo.bind(newList));
+    let listItem = document.createElement("li");
+    let listName = document.createTextNode(newList.name);
+    addEventListeners(listItem,"click",assignListInfo,newList);
+    // To call deleteList Method while Right Click on the List Item 
     listItem.addEventListener("contextmenu", function(event) {
-      if (event.button == 2) { 
-        deleteList(newList); 
-      } 
-      event.preventDefault();
-      return false;
+    if (2 === event.button) { 
+      deleteList(newList); 
+    } 
+    event.preventDefault();
+    return false;
     });
     listItem.appendChild(listName);
     listItems.appendChild(listItem);
-    taskFieldClass[0].style.width = "900px";
-    document.getElementById("list-heading").value = newList.name;
-    document.getElementById("new-list-input").value = "";
-    //To Display List Heading in right Side bar
+    getElementByClassName("task-field-class")[0].style.width = "900px";
+    getElementsById("list-heading").value = newList.name;
+    inputValue.value = "";
   }
 }
 
-function deleteList(newList) {
-  var userChoice = confirm("Are you sure to delete selected List?");
-  if(userChoice){
-    let index = toDoList.indexOf(newList);
-    toDoList.splice(index,1);
-    reloadList();
-  }
+/**
+ * Method to add tasks with Particular List 
+ */
+function addNewTask() {
+  let newTask = {
+    id: "",
+    name: "",
+    status: "incomplete",
+    steps: []
+  };
+  newTask.id = generateId();
+  let taskItems = getElementsById("task-items");
+  let stepItems = getElementsById("step-items");
+  let taskName = getElementsById("new-task-input");
+  newTask.name = taskName.value;
+  taskInfo = newTask;
+  stepItems.innerHTML = "";
+  // To display All the Available Tasks 
+  let taskItem = document.createElement("li");
+  let task = document.createTextNode(newTask.name);
+  //let checkMark = document.createTextNode("\u2713");
+  let checkbox = document.createElement('input');           
+  checkbox.type = "checkbox"; 
+  checkbox.id = "task-checkbox";
+  addEventListeners(checkbox, "click", changeTaskStatus, newTask);  
+  taskItem.appendChild(checkbox);
+  addEventListeners(taskItem, "click", assignTaskInfo, newTask);
+  taskItem.addEventListener("contextmenu", function(event) {
+  if (2 === event.button) { 
+    deleteTask(listInfo,newTask); 
+  } 
+  event.preventDefault();
+  return false;
+  });
+  taskItem.appendChild(task);
+  taskItems.appendChild(taskItem);
+  
+  taskName.value = "";
+  listInfo.tasks.push(newTask);
+  displayList();
 }
 
-function deleteTask(listInfo,newTask) {
-  var userChoice = confirm("Are you sure to delete selected Task?");
-  if(userChoice){
-    let index = listInfo.tasks.indexOf(newTask);
-    listInfo.tasks.splice(index,1);
-    displayTasks();
-    reloadList();
-  }
+/**
+ * Method to add Multiple Steps for a Particular task
+ */
+function addStepsToTask() {
+  let newStep = {
+    id: "",
+    name: "",
+    status: "incomplete"
+  };
+  let stepItems = getElementsById('step-items');
+  newStep.id = generateId();
+  let stepName = document.getElementById("step-input").value;
+  newStep.name = stepName;
+  // To display All the Available Tasks 
+  let stepItem = document.createElement("li");
+  let step = document.createTextNode(newStep.name);
+  addEventListeners(stepItem, "click", assignStepInfo, newStep);
+  stepItem.appendChild(step);
+  stepItems.appendChild(stepItem);
+  document.getElementById("step-input").value = "";
+  taskInfo.steps.push(newStep);
 }
 
-function updateListName() {
-  console.log(listInfo);
-  listInfo.name = document.getElementById("list-heading").value;
-  reloadList();
-}
-
-function reloadList() {
+/**
+ * Method reload is used to Load the List after any change is made on List item
+ */
+function displayList() {
+  let taskCount = "";
+  let listItems = getElementsById("list-items");
   listItems.innerHTML = "";
   for (let index = 0; index < toDoList.length; index++) {
-    var listItem = document.createElement("li");
-    var listName = document.createTextNode(toDoList[index].name);
+    let currentList = toDoList[index];
+    let listItem = document.createElement("li");
+    let listName = document.createTextNode(currentList.name);
     taskCount = toDoList[index].tasks.length; 
-    listItem.addEventListener("click", assignListInfo.bind(toDoList[index]));
+    addEventListeners(listItem,"click",assignListInfo,currentList);
     listItem.addEventListener("contextmenu", function(event) {
-      if (event.button == 2) { 
+      if (2 === event.button) { 
         deleteList(toDoList[index]); 
       } 
       event.preventDefault();
@@ -141,43 +179,32 @@ function reloadList() {
     }
     listItems.appendChild(listItem);
     document.getElementById("list-heading").value = toDoList[index].name;
-    //document.getElementById("list-heading").addEventListener("change", updateListName(toDoList[index]));
   }
 }
 
-function assignListInfo() {
-  document.getElementById("list-heading").value = this.name;
-  listInfo = this;
-  displayTasks();
-}
-function assignTaskInfo() {
-  stepsFieldClass[0].style.width = "auto";
-  document.getElementById("task-heading").value = this.name;
-  taskInfo = this;
-  displaySteps();
-}
-function assignStepInfo() {
-  stepInfo = this;
-}
-
+/**
+ * This method is used to display all the tasks while clicking on the list items
+ */
 function displayTasks() {
+  let taskItems = getElementsById("task-items");
   taskItems.innerHTML = "";
   let allTasks = listInfo.tasks;
   for (let index in allTasks) {
-    var taskItem = document.createElement("li");
-    var task = document.createTextNode(allTasks[index].name);
-    taskItem.style.textDecoration = (allTasks[index].status === "complete") ? "line-through": "none";
-    var checkbox = document.createElement('input'); 
+    let currentTask = allTasks[index];
+    let taskItem = document.createElement("li");
+    let task = document.createTextNode(currentTask.name);
+    taskItem.style.textDecoration = (currentTask.status === "complete") ? "line-through": "none";
+    let checkbox = document.createElement('input'); 
     checkbox.type = "checkbox"; 
     checkbox.id = "task-checkbox";
-    checkbox.addEventListener("click", changeTaskStatus.bind(allTasks[index]));          
+    addEventListeners(checkbox, "click", changeTaskStatus, currentTask);
     taskItem.appendChild(checkbox);
-    taskItem.addEventListener("click", assignTaskInfo.bind(allTasks[index]));
+    addEventListeners(taskItem, "click", assignTaskInfo, currentTask);
     taskItem.addEventListener("contextmenu", function(event) {
-      if (event.button == 2) { 
-        deleteTask(listInfo, allTasks[index]); 
-      } 
-      event.preventDefault();
+    if (2 === event.button) { 
+      deleteTask(listInfo, currentTask); 
+    } 
+    event.preventDefault();
       return false;  
     });
     taskItem.appendChild(task);
@@ -185,96 +212,190 @@ function displayTasks() {
   }
 }
 
+/**
+ * This method is used to display all the Steps while clicking on the Task items
+ */
 function displaySteps() {
+  let stepItems = getElementsById('step-items');
   stepItems.innerHTML = "";
   let allSteps = taskInfo.steps;
   for (let index in allSteps) {
-    let deleteStep = document.createElement("button");
-    deleteStep.id = "delete-btn";
-    deleteStep.addEventListener("click", deleteStep.bind(allSteps[index]));
-    document.getElementById("delete-step").appendChild(deleteStep);
+    let currentStep = allSteps[index];
     let stepItem = document.createElement("li");
     let step = document.createTextNode(allSteps[index].name);
-    stepItem.addEventListener("click", assignListInfo.bind(allSteps[index]));
+    let close = document.createTextNode("\u00D7");
+    addEventListeners(close, "click", deleteStep, currentStep);
+    addEventListeners(stepItem, "click", assignStepInfo, currentStep);
     stepItem.appendChild(step);
+    stepItem.appendChild(close);
     stepItems.appendChild(stepItem);
   }
 }
 
 /**
- * Method to add tasks with Particular List 
+ * This method is used to Edit List Name
  */
-function addNewTask() {
-  var newTask = {
-    id: "",
-    name: "",
-    status: "incomplete",
-    steps: []
-  };
-  newTask.id = generateId();
-  let taskName = document.getElementById("new-task-input").value;
-  newTask.name = taskName;
-  taskInfo = newTask;
-  stepItems.innerHTML = "";
-  // To display All the Available Tasks 
-  var taskItem = document.createElement("li");
-  var task = document.createTextNode(newTask.name);
-  //var checkMark = document.createTextNode("\u2713");
-  var checkbox = document.createElement('input');           
-  checkbox.type = "checkbox"; 
-  checkbox.id = "task-checkbox";
-  checkbox.addEventListener("click", changeTaskStatus.bind(newTask));          
-  taskItem.appendChild(checkbox);
-  taskItem.addEventListener("click", assignTaskInfo.bind(newTask));
-  taskItem.addEventListener("contextmenu", function(event) {
-    if (event.button == 2) { 
-      deleteTask(listInfo,newTask); 
-    } 
-    event.preventDefault();
-    return false;
-  });
-  taskItem.appendChild(task);
-  taskItems.appendChild(taskItem);
-  document.getElementById("new-task-input").value = "";
-  listInfo.tasks.push(newTask);
-  reloadList();
-}
-
-function changeTaskStatus() {
-  this.status = (this.status === "incomplete") ? "complete" : "incomplete" ;
-  displayTasks();
-  console.log(this.status);
+function updateListName() {
+  listInfo.name = document.getElementById("list-heading").value;
+  displayList();
 }
 
 /**
- * Method to add Multiple Steps for a Particular task
+ * This method is used to Edit Task Name
  */
-function addStepsToTask() {
-  var newStep = {
-    id: "",
-    name: "",
-    status: "incomplete"
-  };
-  newStep.id = generateId();
-  let stepName = document.getElementById("step-input").value;
-  newStep.name = stepName;
-  // To display All the Available Tasks 
-  var stepItem = document.createElement("li");
-  var step = document.createTextNode(newStep.name);
-  stepItem.addEventListener("click", assignStepInfo.bind(newStep));
-  stepItem.appendChild(step);
-  stepItems.appendChild(stepItem);
-  document.getElementById("step-input").value = "";
-  taskInfo.steps.push(newStep);
+function updateTaskName() {
+  taskInfo.name = document.getElementById("task-heading").value;
+  displayTasks();
 }
 
-function a(element, event, listener, bindElement = "") {
-  element.addEventListener(event, listener.bind(bindElement));
+/**
+ * 
+ * @param {Object} newList List object which is deleted from the toDoList Array
+ * This method is used to delete List Object from the toDoList Array
+ */
+function deleteList(newList) {
+  let userChoice = confirm("Are you sure to delete selected List?");
+  if(userChoice){
+    let index = toDoList.indexOf(newList);
+    toDoList.splice(index,1);
+    displayList();
+  }
 }
 
+/**
+ * 
+ * @param {Object} listInfo which is to be deleted
+ * @param {Object} newTask which is to be deleted
+ * Method is used to delete particular task from Array
+ */
+function deleteTask(listInfo,newTask) {
+  let userChoice = confirm("Are you sure to delete selected Task?");
+  if(userChoice){
+    let index = listInfo.tasks.indexOf(newTask);
+    listInfo.tasks.splice(index,1);
+    displayTasks();
+    displayList();
+  }
+}
+
+/**
+ * This method is used to delete steps from the toDoList Object
+ */
+function deleteStep() {
+  stepInfo = this;
+}
+
+/**
+ * This method is used to change task status(complete to incomplete and Vice versa) 
+ * while clicking on the check box
+ */
+function changeTaskStatus() {
+  this.status = ("incomplete" === this.status) ? "complete" : "incomplete" ;
+  displayTasks();
+}
+
+/**
+ * assignListInfo is used to assign current List Object to listInfo (global object) for 
+ * further updates like Name Edit, to add New task with List Objects 
+ */
+function assignListInfo() {
+  document.getElementById("list-heading").value = this.name;
+  listInfo = this;
+  displayTasks();
+}
+
+/**
+ * This method is used to assign current Task Object to taskInfo (global object) for 
+ * further updates like Name Edit, to add New Steps with task Objects 
+ */
+function assignTaskInfo() {
+  getElementByClassName('steps-field-class')[0].style.width = "auto";
+  let taskHeading = getElementsById("task-heading");
+  taskHeading.value = this.name;
+  taskHeading.style.textDecoration  = (this.status === "complete") ? "line-through": "none";
+  taskInfo = this;
+  displaySteps();
+}
+
+/**
+ * This method is used to assign current Step Object to stepInfo (global object) 
+ */
+function assignStepInfo() {
+  stepInfo = this;
+}
+
+/**
+ * This method is used to generate random id for list,task,step
+ */
 function generateId() {
   return (Math.random().toString(20).substring(3, 18)
     + Math.random().toString(20).substring(3, 18));
 }
 
+/**
+ * This method showTaskField used to toggle Task field 
+ */
+function showTaskField() {
+  let textFields = getElementByClassName("right-side-nav-bar");
+  for (let textField of textFields) {
+    textField.classList.toggle("block")
+  }
+}
+
+/**
+ * 
+ * @param {Event} event to ckech keyCode
+ * addSteps method checks keyCode and call the addStepsToTask method to add new steps 
+ * for particular task
+ */
+function addSteps (event) {
+  if (13 === event.keyCode) {
+    addStepsToTask();
+  }
+}
+
+/**
+ * 
+ * @param {Event} event to ckech keyCode
+ * editListName method checks keyCode and call the updateListName method to Edit List Name
+ */
+function editListName (event) {
+  if (13 === event.keyCode) {
+    updateListName();
+  }
+}
+
+/**
+ * 
+ * @param {Event} event to ckech keyCode
+ * editTaskName method checks keyCode and call the updateTaskName method to Edit Task Name
+ */
+function editTaskName (event) {
+  if (13 === event.keyCode) {
+    updateTaskName();
+  }
+}
+
+/**
+ * 
+ * @param {Event} event to ckech keyCode
+ * addTask method checks keyCode and call the addNewTask method to Add new Task with 
+ * particular list
+ */
+function addTask (event) {
+  if (13 === event.keyCode) {
+    addNewTask();
+  }
+}
+
+/** 
+ * To Trigger add-list button While Entering Enter Key 
+ */
+document.getElementById("new-list-input")
+  .addEventListener("keyup", function (event) {
+    if (13 === event.keyCode) {
+      document.getElementById("add-list").click();
+      getElementsById("new-task-input").focus();
+    }
+  });
 
