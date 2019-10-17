@@ -22,15 +22,22 @@ html body {
   height: 50PX;
   width: 50PX;
 }
+h4 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
 .side-bar {
   display:block;
   height: 100%;
   width: auto;
   background-color: #f4f4f4;
-  margin-left: 0px;
 }
 .nav-bar {
   display: flex;
+  margin-left: 0px;
+  height: 100%;
+  float:left;
+  overflow-y: auto;
 }
 .dotted-icon {
   height: 22px;
@@ -112,7 +119,7 @@ input[type="text"]::placeholder {
   background-color: #f4f4f4;
 }
 .plus-icon-button {
-  margin-top: 10px;
+  margin-top: 15px;
   margin-left: 0px;
   float: left;
 }
@@ -134,6 +141,7 @@ input[type="text"]::placeholder {
 .right-side-nav-bar {
   margin-left: 8px;
   margin-top: 12px;
+  width: 270px;
   display:none;
 }
 #all-tasks {
@@ -147,17 +155,33 @@ input[type="text"]::placeholder {
   border: none;
   width: 150px;
 }
-#task-items {
+#task-items, #step-items {
   list-style: none;
   display: block;
   text-decoration: none;
+  padding-left: 0px;
 }
 #list-items {
-  list-style-image: url('../images/list.svg');
-  line-height: 25px;
-  margin-left: 0px;
-  cursor: pointer;
+  padding-left: 14px;
+  width: 270px;
 }
+li {
+  list-style: none;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+#list-items li:before {
+  content: '';
+  display: inline-block;
+  height: 14px;
+  width: 20px;
+  cursor: pointer;
+  background-size: 16px;
+  background-image: url("../images/list.svg");
+  background-repeat: no-repeat;
+  margin-right: 19px;
+}
+
 .toggle-bar, .side-bar-add-list {
   display: flex;
   cursor: pointer;
@@ -208,4 +232,17 @@ li {
   margin-bottom: 0px;
   margin-right: 0px;
   display: flex;
+}
+#add-list {
+  display: none;
+}
+.steps-display {
+  outline: none;
+  border: none;
+}
+#close-btn {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
 }
