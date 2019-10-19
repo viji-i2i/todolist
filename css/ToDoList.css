@@ -91,7 +91,7 @@ input[type="text"]::placeholder {
 .hamburger-icon, .sun-icon, .calender-icon, .user-icon, .home-icon, .clock-icon {
   height: 20px;
   width: 20px;
-  background-color: #f4f4f4;
+  background-color: transparent;
   cursor: pointer;
 }
 .plus-icon {
@@ -124,7 +124,7 @@ input[type="text"]::placeholder {
   width: 44px;
   outline: none;
   border: none;
-  background-color: #f4f4f4;
+  background-color: transparent;
 }
 .plus-btn {
   height: 17px;
@@ -285,13 +285,16 @@ li:hover {
   z-index: 5;
   position: relative;
   background: white;
-  margin: 10px 0;
+  margin: 20px 0;
   border: 1px solid #eaeaea;
   border-radius: 2px;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 .section-item {
   display: flex;
-  padding: 5px 0px 5px opx; 
+  padding: 15px 0px 15px opx; 
+  margin: 10px 0;
+
 }
