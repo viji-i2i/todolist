@@ -29,38 +29,40 @@
           <button type="submit" class="hamburger-icon-button" id="show-right-side-bar">
             <img src="images/hamburger.svg" class="hamburger-icon">
           </button>
-          <span class="toggle-bar">
-            <button type="submit" class="sun-icon-button">
-              <img src="images/sun.svg" class="sun-icon">
-            </button>
-            <span class="right-side-nav-bar"> My Day </span>
-          </span>
-          <span class="toggle-bar">
-            <button type="submit" class="star-icon-button ">
-              <img src="images/star-icon.svg" class="star-icon ">
-            </button>
-            <span class="right-side-nav-bar"> Important  </span>
-          </span>
-          <span class="toggle-bar">
-            <button type="submit" class="calender-icon-button ">
-              <img src="images/calendar.svg" class="calender-icon ">
-            </button>
-            <span class="right-side-nav-bar"> Planned</span>
-          </span>
-          <span class="toggle-bar">
-            <button type="submit" class="user-icon-button ">
-              <img src="images/user.png" class="user-icon ">
-            </button>
-            <span class="right-side-nav-bar"> Assigned To Me</span>
-          </span>
-          <span class="toggle-bar">
-            <button type="submit" class="home-icon-button ">
-              <img src="images/home.svg" class="home-icon ">
-            </button>
-            <span class="right-side-nav-bar"> Tasks</span>
-          </span>
-          <div class="right-side-bar">
-            <ul id="list-items"></ul>
+          <div class="sidebar-scroll">
+            <span class="toggle-bar">
+              <button type="submit" class="sun-icon-button">
+                <img src="images/sun.svg" class="sun-icon">
+              </button>
+              <span class="right-side-nav-bar"> My Day </span>
+            </span>
+            <span class="toggle-bar">
+              <button type="submit" class="star-icon-button ">
+                <img src="images/star-icon.svg" class="star-icon ">
+              </button>
+              <span class="right-side-nav-bar"> Important  </span>
+            </span>
+            <span class="toggle-bar">
+              <button type="submit" class="calender-icon-button ">
+                <img src="images/calendar.svg" class="calender-icon ">
+              </button>
+              <span class="right-side-nav-bar"> Planned</span>
+            </span>
+            <span class="toggle-bar">
+              <button type="submit" class="user-icon-button ">
+                <img src="images/user.png" class="user-icon ">
+              </button>
+              <span class="right-side-nav-bar"> Assigned To Me</span>
+            </span>
+            <span class="toggle-bar">
+              <button type="submit" class="home-icon-button ">
+                <img src="images/home.svg" class="home-icon ">
+              </button>
+              <span class="right-side-nav-bar"> Tasks</span>
+            </span>        
+            <div class="right-side-bar">
+              <ul id="list-items"></ul>
+            </div>
           </div>
           <div class="side-bar-add-list">
             <button type="submit" class="plus-icon-button" id="show-text-field">
@@ -77,12 +79,51 @@
         <div id="task-field" class="task-field-class">
           <input type="text"  id="list-heading" />
           <ul id="task-items"></ul>
-          <input type="text" name="task" id="new-task-input" placeholder="Add task"/>
+          <div id="task-input-field">
+            <button type="submit" class="plus-btn" >
+                <img src="images/plus-symbol.svg" class="plus-icon" >
+            </button>
+            <input type="text" name="task" id="new-task-input" placeholder="Add task"/>
+          </div>
         </div>
         <div id="steps-field" class="steps-field-class">
           <input type="text"  id="task-heading" />
           <ul id="step-items"></ul>
-          <input type="text" name="step" id="step-input" placeholder="Next step"/>
+          <div id="task-input-field">
+              <button type="submit" class="plus-btn" >
+                  <img src="images/plus-symbol.svg" class="plus-icon" >
+              </button>
+              <input type="text" name="step" id="step-input" placeholder="Next step"/>
+          </div>
+          <div class="section">
+              <div class="section-item">
+                <button type="submit" class="sun-icon-button">
+                  <img src="images/sun.svg" class="sun-icon">
+                 </button>
+                <span class="right-side-nav-bar"> Add to My Day </span>
+              </div>
+            </div>
+            <div class="section">
+                <div class="section-item">
+                  <button type="submit" class="clock-icon-button">
+                    <img src="images/clock.png" class="clock-icon">
+                  </button>
+                  <span class="right-side-nav-bar"> Remind me </span>
+                </div>
+                <div class="section-item">
+                    <button type="submit" class="clock-icon-button">
+                      <img src="images/clock.png" class="clock-icon">
+                    </button>
+                    <span class="right-side-nav-bar"> Remind me </span>
+                  </div>
+                  <div class="section-item">
+                      <button type="submit" class="clock-icon-button">
+                        <img src="images/clock.png" class="clock-icon">
+                      </button>
+                      <span class="right-side-nav-bar"> Remind me </span>
+                  </div>
+            </div>
+          </div>
           <div id="delete-step">
           </div>
         </div>

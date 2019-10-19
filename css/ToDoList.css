@@ -18,7 +18,7 @@ html body {
 }
 .todo-heading {
   display: flex;
-  margin-left: 50px;
+  margin-left: 5px;
   margin-top: -6px;
   color: #ffffff;
   height: 50PX;
@@ -57,8 +57,8 @@ html body {
 .search-box {
   border-radius: 2px;
   display: flex;
-  margin-top: 6px;
-  margin-left: 175px;
+  margin-top: 7px;
+  margin-left: 385px;
   background-color: #c3dcf7;
   width: 26%;
   height: 33px;
@@ -88,11 +88,21 @@ input[type="text"]::placeholder {
 .search-box:hover {
   background-color: #ffffff;
 }
-.hamburger-icon, .sun-icon, .calender-icon, .user-icon, .home-icon, .plus-icon {
+.hamburger-icon, .sun-icon, .calender-icon, .user-icon, .home-icon, .clock-icon {
   height: 20px;
   width: 20px;
   background-color: #f4f4f4;
   cursor: pointer;
+}
+.plus-icon {
+  height: 17px;
+  width: 17px;
+  background-color: #f4f4f4;
+  cursor: pointer;
+}
+#task-input-field {
+  display: flex;
+  margin-left: -10px;
 }
 .star-icon {
   height: 15px;
@@ -109,8 +119,15 @@ input[type="text"]::placeholder {
   margin-bottom: 10px;
 }
 .sun-icon-button, .star-icon-button, .calender-icon-button,
- .user-icon-button, .home-icon-button, .plus-icon-button {
+ .user-icon-button, .home-icon-button, .plus-icon-button, .clock-icon-button {
   height: 37px;
+  width: 44px;
+  outline: none;
+  border: none;
+  background-color: #f4f4f4;
+}
+.plus-btn {
+  height: 17px;
   width: 44px;
   outline: none;
   border: none;
@@ -120,6 +137,11 @@ input[type="text"]::placeholder {
   margin-top: 15px;
   margin-left: 0px;
   float: left;
+}
+.sidebar-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
 }
 .hamburger-icon:hover {
   background-color: #f4f4f4;
@@ -138,7 +160,7 @@ input[type="text"]::placeholder {
 }
 .right-side-nav-bar {
   margin-left: 8px;
-  margin-top: 12px;
+  margin-top: 9px;
   width: 270px;
   display:none;
 }
@@ -167,6 +189,9 @@ li {
   list-style: none;
   margin-bottom: 10px;
   margin-top: 10px;
+}
+.list-name {
+  width: 20px;
 }
 #list-items li:before {
   content: '';
@@ -205,7 +230,7 @@ li {
   cursor: pointer;
 }
 li:hover {
-    background-color: #ffffff;
+    background-color: #fffafa;
 }
 #list-heading, #task-heading {
   color: #0078d7;
@@ -254,4 +279,19 @@ li:hover {
 }
 .task-count {
   padding-left: 30px;
+}
+.section {
+  display: flex;
+  z-index: 5;
+  position: relative;
+  background: white;
+  margin: 10px 0;
+  border: 1px solid #eaeaea;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+}
+.section-item {
+  display: flex;
+  padding: 5px 0px 5px opx; 
 }

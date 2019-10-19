@@ -1,33 +1,18 @@
 "use strict";
 init();
 function init() {
-  addEventListeners(getElementsById("add-list"), "click", addNewList);
-  addEventListeners(getElementsById("new-task-input"), "keyup", addNewTask);
-  addEventListeners(getElementsById("task-heading"), "keyup", updateTaskName);
-  addEventListeners(getElementsById("list-heading"), "keyup", updateListName);
-  addEventListeners(getElementsById("step-input"), "keyup", addStepsToTask);
-  addEventListeners(getElementsById("show-text-field"), "click", showTaskField);
+  addEventListeners("add-list", "click", addNewList);
+  addEventListeners("new-list-input", "keyup", addNewList);
+  addEventListeners("new-task-input", "keyup", addNewTask);
+  addEventListeners("task-heading", "keyup", updateTaskName);
+  addEventListeners("list-heading", "keyup", updateListName);
+  addEventListeners("step-input", "keyup", addStepsToTask);
+  addEventListeners("show-text-field", "click", showTaskField);
 }
 
-/**
- * 
- * This Generic method is used to get Elements By using given Id
- * @param {string} id which is used to get Elements 
- * @return  {Object} Element is returned
- */
-function getElementsById(id) {
-  return document.getElementById(id);
+function addEventListeners(element, event, functionName) {
+  $("#"+element).bind(event, functionName);
 }
-
-/**
- * This Generic method is used to get Elements By using given Class Name
- * @param {string} className which is used to get Elements 
- * @return {Object} created Element will be returned
- */
-function getElementByClassName(className) {
-  return document.getElementsByClassName(className);
-}
-
 /** 
  * This Generic Function is used to Add Event listeners to particular element
  * @param {Object} element to which event to be added
@@ -35,8 +20,8 @@ function getElementByClassName(className) {
  * @param {Function} functionName function to be trigger which occurrence of event
  * @param {Object} bindElement Element to be bind
  */
-function addEventListeners(element, event, functionName, bindElement = "") {
-  element.addEventListener(event, functionName.bind(bindElement));
+function bindObject(element, event, functionName, bindElement = "") {
+  $(element).bind(event, functionName.bind(bindElement));
 }
 
 /**
@@ -45,7 +30,7 @@ function addEventListeners(element, event, functionName, bindElement = "") {
  * @return  {Object} Created Element will be returned
  */
 function createElementByName(element) {
-   return document.createElement(element);
+   return $(document.createElement(element));
 }
 
 /**
@@ -54,16 +39,16 @@ function createElementByName(element) {
  * @return  {Object} Created Text Node will be returned
  */
 function createTextNodeByName(element) {
-  return document.createTextNode(element);
+  return $(document.createTextNode(element));
 }
 
 /**
  * Method is used to create checkbox dinamically 
  */
 function createCheckBox() {
-  var checkboxImg = document.createElement('IMG');
-  checkboxImg.setAttribute('class', 'checkbox');
-  checkboxImg.setAttribute('src', 'images/uncheck.png'); 
+  var checkboxImg = $(document.createElement('IMG'));
+  checkboxImg.addClass("checkbox");
+  checkboxImg.attr('src', 'images/uncheck.png'); 
   return checkboxImg;
 }
 
@@ -72,9 +57,9 @@ function createCheckBox() {
  * @param {string} id  id of button
  */
 function  createCloseButton(id){ 
-  var closeButton = createElementByName('button');
-  closeButton.appendChild(createTextNodeByName("\u00D7"));
-  closeButton.id = id;
+  var closeButton = $(createElementByName('button'));
+  closeButton.append(createTextNodeByName("\u00D7"));
+  closeButton.attr('id',id);
   return closeButton;
 }
 
@@ -96,6 +81,7 @@ function generateId() {
  * This Method addNewList is used to store new List items in toDoList Array
  */
 function addNewList() {
+  if (13 == event.keyCode) {
   let newList = {
     id: "",
     name: "",
@@ -103,26 +89,31 @@ function addNewList() {
     tasks: []
   };
   newList.id = generateId();
-  let listItems = getElementsById("list-items");
-  let taskItems = getElementsById("task-items");
-  let inputValue = getElementsById("new-list-input");
-  if ("" === inputValue.value) {
+  let listItems = $("#list-items");
+  let taskItems = $("#task-items");
+  let inputValue = $("#new-list-input");
+  if ("" === inputValue.val()) {
     alert("It seems like List Name is Empty. Enter Your List name");
   } else {
-    newList.name = inputValue.value;
+    newList.name = inputValue.val();
     toDoList.push(newList);
     listInfo = newList;
-    taskItems.innerHTML = "";
+    console.log(inputValue.val()+"  hello");
+    taskItems.html("");
     let listItem = createElementByName("li");
-    let listName = createTextNodeByName(newList.name);
-    addEventListeners(listItem, "click", assignListInfo, newList);
-    addEventListeners(listItem, "contextmenu", deleteList, newList);
-    listItem.appendChild(listName);
-    listItems.appendChild(listItem);
-    getElementByClassName("task-field-class")[0].style.width = "900px";
-    getElementsById("list-heading").value = newList.name;
-    inputValue.value = "";
+    let listName = createElementByName("span");
+    listName.addClass("list-name");
+    listName.text(newList.name);
+    bindObject(listItem, "click", assignListInfo, newList);
+    bindObject(listItem, "contextmenu", deleteList, newList);
+    listItem.append(listName);
+    listItems.append(listItem);
+    $(".task-field-class")[0].style.width = "900px";
+    $("#list-heading").val(newList.name);
+    inputValue.val("");
+    $("#new-task-input").focus();
   }
+}
 }
 
 /**
@@ -137,27 +128,27 @@ function addNewTask() {
       steps: []
     };
     newTask.id = generateId();
-    let taskItems = getElementsById("task-items");
-    let stepItems = getElementsById("step-items");
-    let taskName = getElementsById("new-task-input");
-    newTask.name = taskName.value;
+    let taskItems = $("#task-items");
+    let stepItems = $("#step-items");
+    let taskName = $("#new-task-input");
+    newTask.name = taskName.val();
     taskInfo = newTask;
     stepItems.innerHTML = "";
     let taskItem = createElementByName("li");
     var checkboxImg = createCheckBox();
-    taskItem.appendChild(checkboxImg);
-    addEventListeners(checkboxImg, "click", changeTaskStatus, newTask);  
-    addEventListeners(taskItem, "click", assignTaskInfo, newTask);
-    taskItem.addEventListener("contextmenu", function(event) {
+    taskItem.append(checkboxImg);
+    bindObject(checkboxImg, "click", changeTaskStatus, newTask);  
+    bindObject(taskItem, "click", assignTaskInfo, newTask);
+    taskItem.bind("contextmenu", function(event) {
       if (2 === event.button) { 
         deleteTask(listInfo, newTask); 
       } 
       event.preventDefault();
       return false;  
     });   
-    taskItem.appendChild(createTextNodeByName(newTask.name));
-    taskItems.appendChild(taskItem);
-    taskName.value = "";
+    taskItem.append(createTextNodeByName(newTask.name));
+    taskItems.append(taskItem);
+    taskName.val("");
     listInfo.tasks.push(newTask);
     displayList();
   }
@@ -173,25 +164,25 @@ function addStepsToTask() {
       name: "",
       status: "incomplete"
     };
-    let stepItems = getElementsById("step-items");
+    let stepItems = $("#step-items");
     newStep.id = generateId();
-    let stepName = getElementsById("step-input").value;
+    let stepName = $("#step-input").val();
     newStep.name = stepName;
     let stepItem = createElementByName("li");
     let stepsDisplay = createElementByName("input");
-    stepsDisplay.className = "steps-display";
-    stepsDisplay.setAttribute('type', 'text');
-    stepsDisplay.setAttribute('value', stepName);
+    stepsDisplay.addClass("steps-display");
+    stepsDisplay.attr('type', 'text');
+    stepsDisplay.val(stepName);
     let closeBtn = createCloseButton("close-btn");
-    addEventListeners(closeBtn, "click", deleteStep, stepName);
+    bindObject(closeBtn, "click", deleteStep, stepName);
     var checkboxImg = createCheckBox();
-    addEventListeners(checkboxImg, "click", changeStepStatus, newStep);  
-    stepItem.appendChild(checkboxImg);
-    addEventListeners(stepsDisplay, "keyup", updateStepName, newStep);
-    stepItem.appendChild(stepsDisplay);
-    stepItem.appendChild(closeBtn);
-    stepItems.appendChild(stepItem);
-    document.getElementById("step-input").value = "";
+    bindObject(checkboxImg, "click", changeStepStatus, newStep);  
+    stepItem.append(checkboxImg);
+    bindObject(stepsDisplay, "keyup", updateStepName, newStep);
+    stepItem.append(stepsDisplay);
+    stepItem.append(closeBtn);
+    stepItems.append(stepItem);
+    $("#step-input").val("");
     taskInfo.steps.push(newStep);
   }
 }
@@ -201,25 +192,26 @@ function addStepsToTask() {
  */
 function displayList() {
   let taskCount = "";
-  let listItems = getElementsById("list-items");
-  listItems.innerHTML = "";
+  let listItems = $("#list-items");
+  listItems.html("");
   for (let index = 0; index < toDoList.length; index++) {
     let currentList = toDoList[index];
     let listItem = createElementByName("li");
-    let listName = createTextNodeByName(currentList.name);
+    let listName = createElementByName("span");
+    listName.addClass("list-name");
+    listName.text(currentList.name);
     taskCount = toDoList[index].tasks.length; 
-    addEventListeners(listItem, "click", assignListInfo, currentList);
-    addEventListeners(listItem, "contextmenu", deleteList, currentList);
-    listItem.appendChild(listName);
+    bindObject(listItem, "click", assignListInfo, currentList);
+    bindObject(listItem, "contextmenu", deleteList, currentList);
+    listItem.append(listName);
     let taskCountSpan = createElementByName("span");
-    taskCountSpan.setAttribute("class", "task-count");
+    taskCountSpan.addClass("task-count");
     let noOfTask = createTextNodeByName(taskCount);
     if (1 <= taskCount) {
-      taskCountSpan.appendChild(noOfTask);
-      listItem.appendChild(taskCountSpan);
+      taskCountSpan.append(noOfTask);
+      listItem.append(taskCountSpan);
     }
-    listItems.appendChild(listItem);
-    document.getElementById("list-heading").value = toDoList[index].name;
+    listItems.append(listItem);
   }
 }
 
@@ -227,30 +219,30 @@ function displayList() {
  * This method is used to display all the tasks while clicking on the list items
  */
 function displayTasks() {
-  let taskItems = getElementsById("task-items");
-  taskItems.innerHTML = "";
+  let taskItems = $("#task-items");
+  taskItems.html("");
   let allTasks = listInfo.tasks;
   for (let index in allTasks) {
     let currentTask = allTasks[index];
     let taskItem = createElementByName("li");
     let task = createTextNodeByName(currentTask.name);
-    taskItem.style.textDecoration = (currentTask.status === "complete") ? "line-through": "none";
+    taskItem.css('text-decoration', (currentTask.status === "complete") ? "line-through": "none");
     var checkboxImg = createCheckBox();
     if (currentTask.status === "complete") {
-      checkboxImg.setAttribute('src', 'images/check.png'); 
+      checkboxImg.attr('src', 'images/check.png'); 
     } 
-    addEventListeners(checkboxImg, "click", changeTaskStatus, currentTask);
-    taskItem.appendChild(checkboxImg);
-    addEventListeners(taskItem, "click", assignTaskInfo, currentTask);
-    taskItem.addEventListener("contextmenu", function(event) {
+    bindObject(checkboxImg, "click", changeTaskStatus, currentTask);
+    taskItem.append(checkboxImg);
+    bindObject(taskItem, "click", assignTaskInfo, currentTask);
+    taskItem.bind("contextmenu", function(event) {
       if (2 === event.button) { 
         deleteTask(listInfo, currentTask); 
       } 
       event.preventDefault();
       return false;  
     });
-    taskItem.appendChild(task);
-    taskItems.appendChild(taskItem);
+    taskItem.append(task);
+    taskItems.append(taskItem);
   }
 }
 
@@ -258,31 +250,31 @@ function displayTasks() {
  * This method is used to display all the Steps while clicking on the Task items
  */
 function displaySteps() {
-  let stepItems = getElementsById("step-items");
-  stepItems.innerHTML = "";
+  let stepItems = $("#step-items");
+  stepItems.html("");
   let allSteps = taskInfo.steps;
   for (let index in allSteps) {
     let currentStep = allSteps[index];
     let stepItem = createElementByName("li");
     let stepsDisplay = createElementByName("input");
-    stepsDisplay.className = "steps-display";
-    stepsDisplay.setAttribute('type', 'text');
-    stepsDisplay.setAttribute('value', allSteps[index].name);
-    addEventListeners(stepsDisplay, "keyup", updateStepName, currentStep);
+    stepsDisplay.addClass("steps-display");
+    stepsDisplay.attr('type', 'text');
+    stepsDisplay.val(allSteps[index].name);
+    bindObject(stepsDisplay, "keyup", updateStepName, currentStep);
     let closeBtn = createCloseButton("close-btn");
     var checkboxImg = createCheckBox();
     if (currentStep.status === "complete") {
-      checkboxImg.setAttribute('src', 'images/check.png'); 
+      checkboxImg.attr('src', 'images/check.png'); 
     } 
-    addEventListeners(checkboxImg, "click", changeStepStatus, currentStep);  
-    stepItem.appendChild(checkboxImg);
-    stepsDisplay.style.textDecoration = (currentStep.status === "complete") ? "line-through": "none";
+    bindObject(checkboxImg, "click", changeStepStatus, currentStep);  
+    stepItem.append(checkboxImg);
+    stepsDisplay.css('text-decoration', (currentStep.status === "complete") ? "line-through": "none");
     closeBtn.id = "close-btn"
-    addEventListeners(closeBtn, "click", deleteStep, currentStep);
-    addEventListeners(stepItem, "click", assignStepInfo, currentStep);
-    stepItem.appendChild(stepsDisplay);
-    stepItem.appendChild(closeBtn);
-    stepItems.appendChild(stepItem);
+    bindObject(closeBtn, "click", deleteStep, currentStep);
+    bindObject(stepItem, "click", assignStepInfo, currentStep);
+    stepItem.append(stepsDisplay);
+    stepItem.append(closeBtn);
+    stepItems.append(stepItem);
   }
 }
 
@@ -291,7 +283,7 @@ function displaySteps() {
  */
 function updateListName() {
   if (13 == event.keyCode) {
-    listInfo.name = getElementsById("list-heading").value;
+    listInfo.name = $("#list-heading").val();
     displayList();
   }
 }
@@ -301,7 +293,7 @@ function updateListName() {
  */
 function updateTaskName() {
   if (13 == event.keyCode) {
-    taskInfo.name = getElementsById("task-heading").value;
+    taskInfo.name = $("#task-heading").val();
     displayTasks();
   }
 }
@@ -312,7 +304,8 @@ function updateTaskName() {
 function updateStepName() {
   if (13 == event.keyCode) {
     let index = taskInfo.steps.indexOf(this);
-    this.name = getElementByClassName("steps-display")[index].value;
+    this.name = $(".steps-display").val(index);
+    console.log($(".steps-display").val(index));
     displaySteps();
   }
 }
@@ -388,7 +381,7 @@ function changeStepStatus() {
  * further updates like Name Edit, to add New task with List Objects 
  */
 function assignListInfo() {
-  getElementsById("list-heading").value = this.name;
+  $("#list-heading").val(this.name);
   listInfo = this;
   displayTasks();
 }
@@ -398,10 +391,10 @@ function assignListInfo() {
  * further updates like Name Edit, to add New Steps with task Objects 
  */
 function assignTaskInfo() {
-  getElementByClassName("steps-field-class")[0].style.width = "auto";
-  let taskHeading = getElementsById("task-heading");
-  taskHeading.value = this.name;
-  taskHeading.style.textDecoration  = (this.status === "complete") ? "line-through": "none";
+  $(".steps-field-class")[0].style.width = "auto";
+  let taskHeading = $("#task-heading");
+  taskHeading.val(this.name);
+  taskHeading.css('text-decoration', (this.status === "complete") ? "line-through": "none");
   taskInfo = this;
   displaySteps();
 }
@@ -417,20 +410,9 @@ function assignStepInfo() {
  * This method showTaskField used to toggle Task field 
  */
 function showTaskField() {
-  let textFields = getElementByClassName("right-side-nav-bar");
+  let textFields = $(".right-side-nav-bar");
   for (let textField of textFields) {
-    textField.classList.toggle("block")
+    textField.classList.toggle("block");
   }
 }
-
-/** 
- * checks keyCode and call the addNewList method to Add new List 
- */
-document.getElementById("new-list-input")
-  .addEventListener("keyup", function (event) {
-    if (13 == event.keyCode) {
-      addNewList();
-      getElementsById("new-task-input").focus();
-    }
-  });
 
