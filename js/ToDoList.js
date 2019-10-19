@@ -6,7 +6,7 @@ function init() {
   addEventListeners(getElementsById("task-heading"), "keyup", updateTaskName);
   addEventListeners(getElementsById("list-heading"), "keyup", updateListName);
   addEventListeners(getElementsById("step-input"), "keyup", addStepsToTask);
- addEventListeners(getElementsById("show-text-field"), "click", showTaskField);
+  addEventListeners(getElementsById("show-text-field"), "click", showTaskField);
 }
 
 /**
@@ -59,13 +59,23 @@ function createTextNodeByName(element) {
 
 /**
  * Method is used to create checkbox dinamically 
- * @param {string} id  id of checkbox
  */
-function createCheckBox(id) {
-  let checkbox = createElementByName("input");           
-  checkbox.type = "checkbox"; 
-  checkbox.id = id;
-  return checkbox;
+function createCheckBox() {
+  var checkboxImg = document.createElement('IMG');
+  checkboxImg.setAttribute('class', 'checkbox');
+  checkboxImg.setAttribute('src', 'images/uncheck.png'); 
+  return checkboxImg;
+}
+
+/**
+ * Method is used to create close button 
+ * @param {string} id  id of button
+ */
+function  createCloseButton(id){ 
+  var closeButton = createElementByName('button');
+  closeButton.appendChild(createTextNodeByName("\u00D7"));
+  closeButton.id = id;
+  return closeButton;
 }
 
 // toDoList is a Array used to store All the List objects
@@ -134,15 +144,9 @@ function addNewTask() {
     taskInfo = newTask;
     stepItems.innerHTML = "";
     let taskItem = createElementByName("li");
-    // let checkbox = createCheckBox("task-checkbox");   
-    //  addEventListeners(checkbox, "click", changeTaskStatus, newTask);  
-    // taskItem.appendChild(checkbox);
-   
-    var img = document.createElement('IMG');
-    img.setAttribute('class', 'mark');
-    img.setAttribute('src', 'images/uncheck.png'); 
-    taskItem.appendChild(img);
-    addEventListeners(img, "click", changeTaskStatus, newTask);  
+    var checkboxImg = createCheckBox();
+    taskItem.appendChild(checkboxImg);
+    addEventListeners(checkboxImg, "click", changeTaskStatus, newTask);  
     addEventListeners(taskItem, "click", assignTaskInfo, newTask);
     taskItem.addEventListener("contextmenu", function(event) {
       if (2 === event.button) { 
@@ -178,13 +182,11 @@ function addStepsToTask() {
     stepsDisplay.className = "steps-display";
     stepsDisplay.setAttribute('type', 'text');
     stepsDisplay.setAttribute('value', stepName);
-    let closeBtn = createElementByName('button');
-    closeBtn.id = "close-btn";
-    closeBtn.appendChild(createTextNodeByName("\u00D7"));
+    let closeBtn = createCloseButton("close-btn");
     addEventListeners(closeBtn, "click", deleteStep, stepName);
-    let checkbox = createCheckBox("step-checkbox");
-    addEventListeners(checkbox, "click", changeStepStatus, newStep);  
-    stepItem.appendChild(checkbox);
+    var checkboxImg = createCheckBox();
+    addEventListeners(checkboxImg, "click", changeStepStatus, newStep);  
+    stepItem.appendChild(checkboxImg);
     addEventListeners(stepsDisplay, "keyup", updateStepName, newStep);
     stepItem.appendChild(stepsDisplay);
     stepItem.appendChild(closeBtn);
@@ -209,8 +211,12 @@ function displayList() {
     addEventListeners(listItem, "click", assignListInfo, currentList);
     addEventListeners(listItem, "contextmenu", deleteList, currentList);
     listItem.appendChild(listName);
+    let taskCountSpan = createElementByName("span");
+    taskCountSpan.setAttribute("class", "task-count");
+    let noOfTask = createTextNodeByName(taskCount);
     if (1 <= taskCount) {
-      listItem.appendChild(createTextNodeByName(taskCount));
+      taskCountSpan.appendChild(noOfTask);
+      listItem.appendChild(taskCountSpan);
     }
     listItems.appendChild(listItem);
     document.getElementById("list-heading").value = toDoList[index].name;
@@ -229,16 +235,12 @@ function displayTasks() {
     let taskItem = createElementByName("li");
     let task = createTextNodeByName(currentTask.name);
     taskItem.style.textDecoration = (currentTask.status === "complete") ? "line-through": "none";
-   // let checkbox = createCheckBox("task-checkbox");
-    var img = document.createElement('IMG');
-    img.setAttribute('class', 'mark');
+    var checkboxImg = createCheckBox();
     if (currentTask.status === "complete") {
-      img.setAttribute('src', 'images/check.png'); 
-    } else {
-      img.setAttribute('src', 'images/uncheck.png'); 
-    }
-    addEventListeners(img, "click", changeTaskStatus, currentTask);
-    taskItem.appendChild(img);
+      checkboxImg.setAttribute('src', 'images/check.png'); 
+    } 
+    addEventListeners(checkboxImg, "click", changeTaskStatus, currentTask);
+    taskItem.appendChild(checkboxImg);
     addEventListeners(taskItem, "click", assignTaskInfo, currentTask);
     taskItem.addEventListener("contextmenu", function(event) {
       if (2 === event.button) { 
@@ -267,14 +269,13 @@ function displaySteps() {
     stepsDisplay.setAttribute('type', 'text');
     stepsDisplay.setAttribute('value', allSteps[index].name);
     addEventListeners(stepsDisplay, "keyup", updateStepName, currentStep);
-    let closeBtn = createElementByName('button');
-    closeBtn.appendChild(createTextNodeByName("\u00D7"));
-    let checkbox = createCheckBox("step-checkbox");
+    let closeBtn = createCloseButton("close-btn");
+    var checkboxImg = createCheckBox();
     if (currentStep.status === "complete") {
-      checkbox.checked = true;
-    }
-    addEventListeners(checkbox, "click", changeStepStatus, currentStep);  
-    stepItem.appendChild(checkbox);
+      checkboxImg.setAttribute('src', 'images/check.png'); 
+    } 
+    addEventListeners(checkboxImg, "click", changeStepStatus, currentStep);  
+    stepItem.appendChild(checkboxImg);
     stepsDisplay.style.textDecoration = (currentStep.status === "complete") ? "line-through": "none";
     closeBtn.id = "close-btn"
     addEventListeners(closeBtn, "click", deleteStep, currentStep);
@@ -312,7 +313,6 @@ function updateStepName() {
   if (13 == event.keyCode) {
     let index = taskInfo.steps.indexOf(this);
     this.name = getElementByClassName("steps-display")[index].value;
-    console.log(getElementByClassName("steps-display")[index].value);
     displaySteps();
   }
 }

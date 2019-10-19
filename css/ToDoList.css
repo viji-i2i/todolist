@@ -8,6 +8,7 @@ html body {
   font-family: "Segoe","Segoe UI","Arial","sans-serif";
 }
 .header {
+  display: flex;
   width: 100%;
   height: 48px;
   background-color: #0078d7;
@@ -16,15 +17,12 @@ html body {
   margin-top: 0px;
 }
 .todo-heading {
-  margin-left: 80px;
-  margin-top: 10px;
+  display: flex;
+  margin-left: 50px;
+  margin-top: -6px;
   color: #ffffff;
   height: 50PX;
   width: 50PX;
-}
-h4 {
-  margin-top: 0px;
-  margin-bottom: 0px;
 }
 .side-bar {
   display:block;
@@ -59,8 +57,8 @@ h4 {
 .search-box {
   border-radius: 2px;
   display: flex;
-  margin: auto;
-  margin-top: -58px;
+  margin-top: 6px;
+  margin-left: 175px;
   background-color: #c3dcf7;
   width: 26%;
   height: 33px;
@@ -206,6 +204,9 @@ li {
 li {
   cursor: pointer;
 }
+li:hover {
+    background-color: #ffffff;
+}
 #list-heading, #task-heading {
   color: #0078d7;
   border: none;
@@ -236,7 +237,7 @@ li {
 #add-list {
   display: none;
 }
-.mark {
+.checkbox {
   width: 20px;
   height: 20px;
   padding-right: 8px;
@@ -250,4 +251,7 @@ li {
   outline: none;
   border: none;
   cursor: pointer;
+}
+.task-count {
+  padding-left: 30px;
 }
