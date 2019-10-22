@@ -108,7 +108,7 @@ function addNewList() {
     bindObject(listItem, "contextmenu", deleteList, newList);
     listItem.append(listName);
     listItems.append(listItem);
-    $(".task-field-class")[0].style.width = "900px";
+    $(".task-field-class")[0].style.width = "850px";
     $("#list-heading").val(newList.name);
     inputValue.val("");
     $("#new-task-input").focus();
